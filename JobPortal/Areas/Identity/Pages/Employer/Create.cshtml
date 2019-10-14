@@ -1,0 +1,62 @@
+﻿@page
+@model JobPortal.Areas.Identity.Pages.Employer.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+
+<h1>Create</h1>
+<h4 class="text-muted">Job</h4>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-area="Identity" asp-page-handler="Create">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.ValidationSummary(false, "", new { @class = "text-danger small" })
+
+            <div class="form-group">
+                <label asp-for="Job.Title" class="control-label"></label>
+                <input asp-for="Job.Title" class="form-control" />
+                <span asp-validation-for="Job.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.Description" class="control-label"></label>
+                <textarea id="summernote" asp-for="Job.Description" name="editordata"></textarea>
+
+
+                <span asp-validation-for="Job.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.City" class="control-label"></label>
+                <input asp-for="Job.City" class="form-control" />
+                <span asp-validation-for="Job.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    $(document).ready(function() {
+    $('#summernote').summernote();
+    });
+}

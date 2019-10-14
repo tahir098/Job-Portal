@@ -10,7 +10,7 @@ namespace Models
     [Table("Applicant")]
     public class Applicant : IdentityUser
     {
-        [Key]
+        
         public int ApplicantId { get; set; }
         [Required]
         public string Password { get; set; }

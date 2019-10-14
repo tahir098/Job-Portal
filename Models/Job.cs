@@ -13,8 +13,8 @@ namespace Models
         [Required]
         public string City { get; set; }
         [Required]
-        public DateTime PostDate { get; set; }
-        [Required]
+        public DateTime PostDate { get; set; } = DateTime.Now;
+ 
         public Employer Employer { get; set; }
     }
 }

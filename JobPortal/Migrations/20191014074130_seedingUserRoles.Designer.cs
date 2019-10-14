@@ -4,14 +4,16 @@ using JobPortal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191014074130_seedingUserRoles")]
+    partial class seedingUserRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,13 +52,13 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "c64f4738-d308-4366-8641-f57151aa1583",
+                            ConcurrencyStamp = "3b655f8d-0ac8-4fea-be17-13650bee9019",
                             Name = "Employer"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "ce28846f-44d7-4162-bba4-56b43aafbb1f",
+                            ConcurrencyStamp = "2eb56ed4-be3c-4399-afbc-ab8169ee3178",
                             Name = "Applicant"
                         });
                 });
@@ -226,7 +228,7 @@ namespace JobPortal.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "0d01af92-276f-4a51-85a5-574ca7e7f081",
+                            UserId = "675234c0-ae5e-43cf-8e80-f37ec7b239df",
                             RoleId = "1"
                         },
                         new
@@ -273,6 +275,7 @@ namespace JobPortal.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmployerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("PostDate")
@@ -364,7 +367,9 @@ namespace JobPortal.Migrations
                 {
                     b.HasOne("Models.Employer", "Employer")
                         .WithMany()
-                        .HasForeignKey("EmployerId");
+                        .HasForeignKey("EmployerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

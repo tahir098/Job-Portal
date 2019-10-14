@@ -4,14 +4,16 @@ using JobPortal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191014075754_seedingRole1ToUser")]
+    partial class seedingRole1ToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,13 +52,13 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "c64f4738-d308-4366-8641-f57151aa1583",
+                            ConcurrencyStamp = "2cc1c62d-be7a-41d2-ab71-cdfd4b20c7b9",
                             Name = "Employer"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "ce28846f-44d7-4162-bba4-56b43aafbb1f",
+                            ConcurrencyStamp = "3cabf200-1a7f-4857-8468-47010e85382c",
                             Name = "Applicant"
                         });
                 });
@@ -273,6 +275,7 @@ namespace JobPortal.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmployerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("PostDate")
@@ -364,7 +367,9 @@ namespace JobPortal.Migrations
                 {
                     b.HasOne("Models.Employer", "Employer")
                         .WithMany()
-                        .HasForeignKey("EmployerId");
+                        .HasForeignKey("EmployerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -7,7 +7,7 @@ namespace Models
     [Table("Employer")]
     public class Employer : IdentityUser
     {
-        [Key]
+      
         public int EmployerId { get; set; }
         [Required]
         public string Password { get; set; }

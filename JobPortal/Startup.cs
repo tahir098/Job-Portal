@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using JobPortal.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using JobPortal.RepositoryPattern;
 
 namespace JobPortal
 {
@@ -34,6 +35,7 @@ namespace JobPortal
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultUI();
+            services.AddTransient<IEFRepository, EFRepository>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddRazorPages();
