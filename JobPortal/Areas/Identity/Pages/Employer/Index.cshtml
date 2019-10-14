@@ -5,14 +5,24 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Job </h2><h4 class="text-muted">Management</h4>
+<div class="form-group">
+    <div class="col-12">
+        <p class="mb-3">
+            <a asp-page="Create" class="btn btn-success float-right mt-3"><i class="fa fa-plus"></i> Create job</a>
+        </p>
+        <h2>Job </h2><h4 class="text-muted">Management</h4>
 
-<p>
-    <a asp-page="Create" class="btn btn-success float-right mt-3">Create job</a>
-</p>
+
+    </div>
+</div>
+
+<br />
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Job[0].JobId)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Job[0].Title)
             </th>
@@ -29,26 +39,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Job) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostDate)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.JobId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.JobId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.JobId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Job)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostDate)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.JobId" class="text-warning"><i class="fa fa-pencil-alt"></i> Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.JobId"><i class="fa fa-eye"></i> Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.JobId" class="text-danger"><i class="fa fa-trash"></i> Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -5,17 +5,15 @@
     ViewData["Title"] = "Create";
 }
 
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<link href='https://cdn.jsdelivr.net/npm/froala-editor@3.0.6/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+@*<link href="~/lib/summernote/dist/summernote-bs4.css" rel="stylesheet" />*@
 
-<h1>Create</h1>
-<h4 class="text-muted">Job</h4>
-
+<h2>Create</h2><h4 class="text-muted">Job</h4>
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-10">
         <form method="post" asp-area="Identity" asp-page-handler="Create">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -28,9 +26,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Job.Description" class="control-label"></label>
-                <textarea id="summernote" asp-for="Job.Description" name="editordata"></textarea>
-
-
+                @*<textarea asp-for="Job.Description" id="description" class="form-control"></textarea>*@
+                <input asp-for="Job.Description" class="form-control" />
                 <span asp-validation-for="Job.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -50,13 +47,21 @@
 </div>
 
 @section Scripts {
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
 
-    $(document).ready(function() {
-    $('#summernote').summernote();
-    });
+
+   
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="https://cdn.tiny.cloud/1/i9xysxqr7gbdxteka38kr1cgiq2yx2c18x07m7k2nbctdg24/tinymce/5/tinymce.min.js"></script>
+    <script>
+   tinymce.init({
+       selector: '#description',
+       height: 300,
+       width : 900
+       
+  });
+    </script>
 }
