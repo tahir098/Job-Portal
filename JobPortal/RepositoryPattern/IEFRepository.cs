@@ -7,7 +7,7 @@ namespace JobPortal.RepositoryPattern
     {
         void Add(object entity);
         Job GetJobById(int id);
-        IEnumerable<Job> GetJobs();
+        IList<Job> GetJobs();
         void Remove(object entity);
         bool SaveChanges();
         void Update(object entity);

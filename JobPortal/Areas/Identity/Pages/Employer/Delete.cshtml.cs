@@ -20,7 +20,7 @@ namespace JobPortal.Areas.Identity.Pages.Employer
         }
 
         [BindProperty]
-        public Job Job { get; set; }
+        public Models.Job Job { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

@@ -37,9 +37,9 @@ namespace JobPortal.RepositoryPattern
         }
 
 
-        public IEnumerable<Job> GetJobs()
+        public IList<Job> GetJobs()
         {
-            return _context.Job;
+            return _context.Job.ToList();
         }
 
         public Job GetJobById(int id)

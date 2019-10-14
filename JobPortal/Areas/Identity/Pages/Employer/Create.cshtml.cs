@@ -27,7 +27,7 @@ namespace JobPortal.Areas.Identity.Pages.Employer
         }
 
         [BindProperty]
-        public Job Job { get; set; }
+        public Models.Job Job { get; set; }
 
         public Models.Employer Employer { get; set; }
 

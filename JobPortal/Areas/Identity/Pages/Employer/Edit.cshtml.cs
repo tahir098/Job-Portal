@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using JobPortal.Data;
 using Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobPortal.Areas.Identity.Pages.Employer
 {
+    [Authorize(Roles ="Employer")]
     public class EditModel : PageModel
     {
         private readonly JobPortal.Data.ApplicationDbContext _context;
@@ -21,7 +23,7 @@ namespace JobPortal.Areas.Identity.Pages.Employer
         }
 
         [BindProperty]
-        public Job Job { get; set; }
+        public Models.Job Job { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

@@ -7,23 +7,27 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using JobPortal.Data;
 using Models;
+using JobPortal.RepositoryPattern;
 
-namespace JobPortal.Areas.Identity.Pages.Employer
+namespace JobPortal.Areas.Identity.Pages.Job
 {
     public class IndexModel : PageModel
     {
-        private readonly JobPortal.Data.ApplicationDbContext _context;
+       
+        private readonly EFRepository repository;
 
-        public IndexModel(JobPortal.Data.ApplicationDbContext context)
+        public IndexModel(EFRepository repository)
         {
-            _context = context;
+            
+            this.repository = repository;
         }
 
         public IList<Models.Job> Job { get;set; }
 
-        public async Task OnGetAsync()
+        public IList<Models.Job> OnGet()
         {
-            Job = await _context.Job.ToListAsync();
+            Job = repository.GetJobs();
+            return Job;
         }
     }
 }
