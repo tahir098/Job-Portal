@@ -4,6 +4,8 @@
     ViewData["Title"] = "Register";
 }
 
+<meta name="google-signin-client_id" content="534148046721-q46r0mirkp9ctp475s8gsa8avo6ep36s.apps.googleusercontent.com">
+
 <h1>@ViewData["Title"]</h1>
 
 <div class="row">
@@ -34,34 +36,34 @@
         <section>
             <h4>Use another service to register.</h4>
             <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
+
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
         </section>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+
+        gapi.load('auth2', function () {
+            gapi.auth2.init();
+        });
+
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        }
+
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+
+       
+    </script>
 }

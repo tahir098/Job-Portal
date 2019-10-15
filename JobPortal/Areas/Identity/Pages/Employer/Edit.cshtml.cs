@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace JobPortal.Areas.Identity.Pages.Employer
 {
-    [Authorize(Roles ="Employer")]
+  //  [Authorize(Roles ="Employer")]
     public class EditModel : PageModel
     {
         private readonly JobPortal.Data.ApplicationDbContext _context;

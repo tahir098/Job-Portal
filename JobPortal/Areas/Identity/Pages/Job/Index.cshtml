@@ -5,50 +5,68 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<style>
+    a {
+        text-decoration: none;
+    }
+</style>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Job[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Job[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Job[0].City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Job[0].PostDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Job) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostDate)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.JobId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.JobId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.JobId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="form-group">
+    <div class="col-12">
+        <h1>All Jobs</h1>
+        <hr />
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-12">
+        <input class="form-control" placeholder="Search jobs by title">
+    </div>
+</div>
+<br />
+
+<div class="form-group">
+
+    <div class="col-12">
+
+
+        @foreach (var item in Model.Job)
+        {
+
+            <div class="card">
+                <div class="card-body">
+                    <a asp-route-id="@item.JobId" asp-page="./Details">
+                        <h5 class="card-title"> @item.Title</h5>
+                    </a>
+                    <h6 class="card-subtitle mb-2 text-muted">@item.City</h6>
+                    <p class="card-text">@item.Description.Substring(0,9)...</p>
+                 
+                </div>
+            </div>
+
+            @*<div class="card text-dark">
+                    <a class="card-header" ><b>Title:</b></a>
+                    <div class="card-body">
+                        <h7 class="card-title"><b>City:</b> @item.City</h7>
+                        <p class="card-text"><b>Description:</b> @item.Description</p>
+                        <div class="card-footer" style="height:49px;">
+                            <p><b>Postdate:</b> @item.PostDate</p>
+                        </div>
+                    </div>
+                </div>*@
+
+            <br />
+        }
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+

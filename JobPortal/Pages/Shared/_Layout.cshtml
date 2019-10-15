@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - JobPortal</title>
+    <title>@ViewData["Title"] - Job Portal</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="~/lib/fontawesome-free-5.11.2-web/css/all.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
@@ -13,48 +13,58 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index"><i class="fa fa-briefcase"></i> JobPortal</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index"><i class="fa fa-globe"></i> Job Portal</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+             
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
 
-                    <ul>
-                        @if (User.IsInRole("Applicant"))
-                        {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">All Applied Jobs</a>
-                        </li>
-                        }
-                       
-                    </ul>
-
-                    <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
+
+                        <partial name="_LoginPartial"/>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index"><i class="fa fa-home"></i> Home</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Employer/Index"><i class="fa fa-feather-alt"></i> Employer</a>
-                        </li>
+                        @if (User.IsInRole("Applicant"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Job/Index"><i class="fa fa-briefcase"></i> Jobs</a>
+                            </li>
 
-                        @*@if (signInManager.IsSignedIn(User) && User.IsInRole("All Applied Jobs 2"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">All Applied Jobs 2</a>
-                                </li>
-                            }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Privacy"><i class="fa fa-check"></i> All Applied Jobs</a>
+                            </li>
+                        }
 
-                            @if (User.Identity.IsAuthenticated && User.IsInRole("Applicant"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Applicant</a>
-                                </li>
-                            }*@
+                        @if (User.IsInRole("Employer"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Employer/Index"><i class="fa fa-feather-alt"></i> Employer</a>
+                            </li>
+                        }
 
                     </ul>
+
+                    
+
+                    @*@if (signInManager.IsSignedIn(User) && User.IsInRole("All Applied Jobs 2"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">All Applied Jobs 2</a>
+                            </li>
+                        }
+
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Applicant"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Applicant</a>
+                            </li>
+                        }*@
+
+
                 </div>
             </div>
         </nav>
