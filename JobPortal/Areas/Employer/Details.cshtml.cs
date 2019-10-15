@@ -8,18 +8,17 @@ using Microsoft.EntityFrameworkCore;
 using JobPortal.Data;
 using Models;
 
-namespace JobPortal.Areas.Identity.Pages.Employer
+namespace JobPortal.Areas.Employer
 {
-    public class DeleteModel : PageModel
+    public class DetailsModel : PageModel
     {
         private readonly JobPortal.Data.ApplicationDbContext _context;
 
-        public DeleteModel(JobPortal.Data.ApplicationDbContext context)
+        public DetailsModel(JobPortal.Data.ApplicationDbContext context)
         {
             _context = context;
         }
 
-        [BindProperty]
         public Models.Job Job { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -36,24 +35,6 @@ namespace JobPortal.Areas.Identity.Pages.Employer
                 return NotFound();
             }
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Job = await _context.Job.FindAsync(id);
-
-            if (Job != null)
-            {
-                _context.Job.Remove(Job);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
         }
     }
 }

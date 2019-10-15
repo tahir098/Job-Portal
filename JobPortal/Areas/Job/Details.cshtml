@@ -1,0 +1,95 @@
+﻿@page
+@model JobPortal.Areas.Job.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Job.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Job.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Job.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Job.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Job.City)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Job.City)
+        </dd>
+        <dt class="col-sm-2">
+            Post date
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Job.PostDate)
+        </dd>
+    </dl>
+</div>
+<hr />
+<div>
+    <a class="btn btn-success" asp-page="./Apply" data-target="#loginModal" data-toggle="modal">Apply Now</a>
+    <button asp-page="./Index" asp-route-id="" class="btn btn-secondary float-right">Back to List</button>
+</div>
+
+<div asp-validation-for="ModelOnly"></div>
+<div class="modal" id="loginModal" tabindex="-1" data-keyboard="false" data-animation="fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" enctype="multipart/form-data">
+
+                <div class="modal-header">                   
+                    <input class="form-control" placeholder="Email" />
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input type="file" asp-for="@Model.Cv" class="form-control custom-file-input" />
+                            <label class="custom-file-label">Choose file...</label>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-md">Apply</button>
+                    <button class="btn btn-danger btn-md" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+@*<script>
+        $(document).ready(function () {
+
+            $('#submit').on("click", function (e) {
+                e.preventDefault();
+                $.ajax({
+
+                    url: 'https://localhost:44334/Identity/Job/Details',
+                    data: new FormData(document.forms[0]),
+                    contentType: false,
+                    processData: false,
+                    type: 'post',
+                    success: function () {
+                        alert("CV posted");
+                    }
+
+                });
+            });
+        });
+    </script>*@

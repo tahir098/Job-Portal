@@ -35,9 +35,20 @@ namespace JobPortal
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultUI();
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                IConfigurationSection googleAuthNSection =
+                    Configuration.GetSection("Authentication:Google");
+
+                options.ClientId = googleAuthNSection["ClientId"];
+                options.ClientSecret = googleAuthNSection["ClientSecret"];
+            });
+              
             services.AddTransient<IEFRepository, EFRepository>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+
+            services.AddMvc();
             services.AddRazorPages();
         }
 
@@ -67,6 +78,7 @@ namespace JobPortal
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+        
             });
         }
     }

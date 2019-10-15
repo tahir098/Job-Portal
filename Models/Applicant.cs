@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,7 +17,7 @@ namespace Models
         public string Password { get; set; }
         [Required]
         public string ConfirmPassword { get; set; }
-        public string Cv { get; set; }
+        public IFormFile Cv { get; set; }
 
     }
 }

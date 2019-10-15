@@ -9,7 +9,7 @@ using JobPortal.Data;
 using Models;
 using JobPortal.RepositoryPattern;
 
-namespace JobPortal.Areas.Identity.Pages.Employer
+namespace JobPortal.Areas.Employer
 {
     public class CreateModel : PageModel
     {

@@ -4,27 +4,30 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using JobPortal.Data;
 using Models;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
-namespace JobPortal.Areas.Identity.Pages.Employer
+namespace JobPortal.Areas.Job
 {
-  //  [Authorize(Roles ="Employer")]
-    public class EditModel : PageModel
+    public class DetailsModel : PageModel
     {
         private readonly JobPortal.Data.ApplicationDbContext _context;
+        private readonly IHostingEnvironment env;
 
-        public EditModel(JobPortal.Data.ApplicationDbContext context)
+        public DetailsModel(JobPortal.Data.ApplicationDbContext context, IHostingEnvironment env)
         {
             _context = context;
+            this.env = env;
         }
 
         [BindProperty]
         public Models.Job Job { get; set; }
 
+ 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -41,39 +44,22 @@ namespace JobPortal.Areas.Identity.Pages.Employer
             return Page();
         }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
+        [BindProperty]
+        public IFormFile Cv { get; set; }
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                ModelState.AddModelError("", "Error, can't submit.");
                 return Page();
             }
 
-            _context.Attach(Job).State = EntityState.Modified;
-
-            try
+            var file = Path.Combine(env.ContentRootPath, "uploads", Cv.FileName);
+            using(var fileStream = new FileStream(file,FileMode.Create))
             {
-                await _context.SaveChangesAsync();
+                await Cv.CopyToAsync(fileStream);
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!JobExists(Job.JobId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
             return RedirectToPage("./Index");
-        }
-
-        private bool JobExists(int id)
-        {
-            return _context.Job.Any(e => e.JobId == id);
         }
     }
 }

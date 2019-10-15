@@ -52,6 +52,8 @@
         <section>
             <h4>Use another service to log in.</h4>
             <hr />
+
+        
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
@@ -70,6 +72,7 @@
                                 @foreach (var provider in Model.ExternalLogins)
                                 {
                                     <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
                                 }
                             </p>
                         </div>
@@ -82,4 +85,25 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+
+        gapi.load('auth2', function () {
+            gapi.auth2.init();
+        });
+
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        }
+
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+
+
+    </script>
 }
