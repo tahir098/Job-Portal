@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 
-namespace JobPortal.Areas.Job
+namespace JobPortal.Areas.Job.Pages
 {
     public class DetailsModel : PageModel
     {

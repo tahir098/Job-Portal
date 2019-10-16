@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JobPortal.Data;
 using Models;
 
-namespace JobPortal.Areas.Employer
+namespace JobPortal.Areas.Employer.Pages
 {
     public class IndexModel : PageModel
     {

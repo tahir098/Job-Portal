@@ -42,28 +42,11 @@
                         @if (User.IsInRole("Employer"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Employer" asp-page="./Index"><i class="fa fa-feather-alt"></i> Employer</a>
+                                <a class="nav-link text-dark" asp-area="Employer" asp-page="/Index"><i class="fa fa-feather-alt"></i> Employer</a>
                             </li>
                         }
 
                     </ul>
-
-                    
-
-                    @*@if (signInManager.IsSignedIn(User) && User.IsInRole("All Applied Jobs 2"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">All Applied Jobs 2</a>
-                            </li>
-                        }
-
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Applicant"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Applicant</a>
-                            </li>
-                        }*@
-
 
                 </div>
             </div>

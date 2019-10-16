@@ -1,5 +1,5 @@
 ﻿@page
-@model JobPortal.Areas.Employer.IndexModel
+@model JobPortal.Areas.Employer.Pages.IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -8,7 +8,7 @@
 <div class="form-group">
     <div class="col-12">
         <p class="mb-3">
-            <a asp-page="Create" class="btn btn-success float-right mt-3"><i class="fa fa-plus"></i> Create job</a>
+            <a asp-area="Employer" asp-page="Create" class="btn btn-success float-right mt-3"><i class="fa fa-plus"></i> Create job</a>
         </p>
         <h2>Job </h2><h4 class="text-muted">Management</h4>
 
@@ -21,7 +21,7 @@
     <thead>
         <tr>
             <th>
-               #
+                #
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Job[0].Title)
@@ -58,9 +58,9 @@
                     @Html.DisplayFor(modelItem => item.PostDate)
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.JobId" class="text-warning"><i class="fa fa-pencil-alt"></i> Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.JobId"><i class="fa fa-eye"></i> Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.JobId" class="text-danger"><i class="fa fa-trash"></i> Delete</a>
+                    <a asp-area="Employer" asp-page="/Edit" asp-route-id="@item.JobId" class="text-warning"><i class="fa fa-pencil-alt"></i> Edit</a> |
+                    <a asp-area="Employer" asp-page="/Details" asp-route-id="@item.JobId"><i class="fa fa-eye"></i> Details</a> |
+                    <a asp-area="Employer" asp-page="/Delete" asp-route-id="@item.JobId" class="text-danger"><i class="fa fa-trash"></i> Delete</a>
                 </td>
             </tr>
         }

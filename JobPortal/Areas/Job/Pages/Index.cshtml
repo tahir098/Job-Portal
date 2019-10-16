@@ -1,15 +1,9 @@
 ﻿@page
-@model JobPortal.Areas.Job.IndexModel
+@model JobPortal.Areas.Job.Pages.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
-
-<style>
-    a {
-        text-decoration: none;
-    }
-</style>
 
 <div class="form-group">
     <div class="col-12">
@@ -44,18 +38,6 @@
                  
                 </div>
             </div>
-
-            @*<div class="card text-dark">
-                    <a class="card-header" ><b>Title:</b></a>
-                    <div class="card-body">
-                        <h7 class="card-title"><b>City:</b> @item.City</h7>
-                        <p class="card-text"><b>Description:</b> @item.Description</p>
-                        <div class="card-footer" style="height:49px;">
-                            <p><b>Postdate:</b> @item.PostDate</p>
-                        </div>
-                    </div>
-                </div>*@
-
             <br />
         }
         <nav aria-label="Page navigation example">

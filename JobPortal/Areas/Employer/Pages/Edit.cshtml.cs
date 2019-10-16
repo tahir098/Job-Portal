@@ -10,7 +10,7 @@ using JobPortal.Data;
 using Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace JobPortal.Areas.Employer
+namespace JobPortal.Areas.Employer.Pages
 {
   //  [Authorize(Roles ="Employer")]
     public class EditModel : PageModel

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace JobPortal.Areas.Job
+namespace JobPortal.Areas.Job.Pages
 {
     public class ApplyModel : PageModel
     {
