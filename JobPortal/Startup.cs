@@ -48,7 +48,7 @@ namespace JobPortal
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
-            services.AddMvc();
+     
             services.AddRazorPages();
         }
 
@@ -70,11 +70,12 @@ namespace JobPortal
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
+            
 
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

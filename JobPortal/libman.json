@@ -13,7 +13,12 @@
     {
       "library": "summernote@0.8.12",
       "destination": "wwwroot/lib/summernote"
-    }
+    },
+    {
+      "library": "jqueryui@1.12.1",
+      "destination": "wwwroot/lib/jquery-ui"
+    },
+
    
 
   ]

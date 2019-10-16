@@ -7,15 +7,14 @@
 
 <div class="form-group">
     <div class="col-12">
-        <h1>All Jobs</h1>
+        <h2>All Jobs</h2>
         <hr />
     </div>
 </div>
 
-
 <div class="form-group">
     <div class="col-12">
-        <input class="form-control" placeholder="Search jobs by title">
+        <input class="form-control" id="search" placeholder="Search jobs by title">
     </div>
 </div>
 <br />
@@ -24,22 +23,29 @@
 
     <div class="col-12">
 
+        <div id="cardBody">
 
-        @foreach (var item in Model.Job)
+        </div>
+
+        @if (Model.Job.Any())
         {
+            @foreach (var item in Model.Job)
+            {
 
-            <div class="card">
-                <div class="card-body">
-                    <a asp-route-id="@item.JobId" asp-page="./Details">
-                        <h5 class="card-title"> @item.Title</h5>
-                    </a>
-                    <h6 class="card-subtitle mb-2 text-muted">@item.City</h6>
-                    <p class="card-text">@item.Description.Substring(0,9)...</p>
-                 
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-route-id="@item.JobId" asp-page="./Details">
+                            <h5 class="card-title"> @item.Title</h5>
+                        </a>
+                        <h6 class="card-subtitle mb-2 text-muted">City: @item.City</h6>
+                        <p class="card-text">Description: @item.Description.Substring(0, 9)...</p>
+                        <p class="text-muted">Posted on: @item.PostDate</p>
+                    </div>
                 </div>
-            </div>
-            <br />
+                <br />
+            }
         }
+
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -52,3 +58,84 @@
     </div>
 </div>
 
+@section Scripts{
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $(function () {
+
+            $("#search").autocomplete({
+                //  source: '/Job/Index?handler=Jobs'
+
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Job/Index?handler=Jobs',
+                        data: { term: request.term },
+
+                        type: 'GET',
+                        headers: {
+                            RequestVerificationToken:
+                                $('input:hidden[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (data) {
+                            //   alert(JSON.stringify(data));
+                            //$('.card').html( `
+
+
+
+                            //            <div class="card">
+                            //                <div class="card-body">
+                            //                    <a asp-route-id="`+ (data.Id) + `" asp-page="./Details">
+                            //                        <h5 class="card-title">`+ (data.title) +`</h5>
+                            //                    </a>
+                            //                    <h6 class="card-subtitle mb-2 text-muted">`+ (data.City) + `</h6>
+                            //                    <p class="card-text">`+ (data.Description) + `...</p>
+
+                            //                </div>
+                            //            </div>
+                            //            <br />
+                            //    `));
+
+                            //$('.card').html(
+                            //    $.each(data, function (callback, element) {
+
+                            //        alert(JSON.stringify(element))
+
+                            //    })
+                            //);
+
+
+
+                            $.each(data, function (i, element) {
+
+
+                                //  alert(data[i].title);
+                                $('#cardBody').append( 
+                                   
+                             
+                                    `<div class="card">
+                                                <div class="card-body">
+                                                    <a href="`+ (element.id) + `">
+                                                      <h5 class="card-title">`+ (element.title) + `</h5>
+                                                    </a>
+                                                    <h6 class="card-subtitle mb-2 text-muted">`+ (element.city) + `</h6>
+                                                    <p class="card-text">`+ (element.description) + `...</p>
+                                                    <p class="text-muted">Posted on:`+ (element.postDate) + `</p>
+                                                </div>
+                                            </div>
+                                        <br/>`
+                                     
+                                );
+                            })
+                            // .html mai masla
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
