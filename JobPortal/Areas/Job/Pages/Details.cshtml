@@ -39,39 +39,78 @@
 </div>
 <hr />
 <div>
-    <a class="btn btn-success" asp-page="./Apply" data-target="#loginModal" data-toggle="modal">Apply Now</a>
-    <button asp-page="./Index" asp-route-id="" class="btn btn-secondary float-right">Back to List</button>
+    <a class="btn btn-success" asp-page="./Apply" id="bootbox" data-target="#loginModal" data-toggle="modal">Apply Now</a>
+    <a asp-page="/Index" class="btn btn-secondary float-right">Back to List</a>
 </div>
 
-<div asp-validation-for="ModelOnly"></div>
-<div class="modal" id="loginModal" tabindex="-1" data-keyboard="false" data-animation="fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form method="post" enctype="multipart/form-data">
 
-                <div class="modal-header">                   
-                    <input class="form-control" placeholder="Email" />
-                </div>
 
-                <div class="modal-body">
-                    <div class="form-group">
-                        <div class="custom-file">
-                            <input type="file" asp-for="@Model.Cv" class="form-control custom-file-input" />
-                            <label class="custom-file-label">Choose file...</label>
 
+@section Scripts{
+    <script src="~/lib/bootbox/bootbox.js"></script>
+
+
+    <script>
+        $('#bootbox').on("click", function () {
+
+
+            var dialog = bootbox.dialog({
+                title: 'Apply here!',
+                message: "<p>This dialog has buttons. Each button has it's own callback function.</p>",
+                inputType: 'file',
+                size: 'medium',
+                buttons: {
+                    cancel: {
+                        label: "I'm a cancel button!",
+                        className: 'btn-danger',
+                        callback: function () {
+                            console.log('Custom cancel clicked');
+                        }
+                    },
+                   
+                    ok: {
+                        label: "I'm an OK button!",
+                        className: 'btn-info',
+                        callback: function () {
+                            console.log('Custom OK clicked');
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+}
+
+@*<div asp-validation-for="ModelOnly"></div>
+    <div class="modal" id="loginModal" tabindex="-1" data-keyboard="false" data-animation="fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" enctype="multipart/form-data">
+
+                    <div class="modal-header">
+                        <input class="form-control" placeholder="Email" />
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" asp-for="@Model.Cv" class="form-control custom-file-input" />
+                                <label class="custom-file-label">Choose file...</label>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-success btn-md">Apply</button>
-                    <button class="btn btn-danger btn-md" data-dismiss="modal">Cancel</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button class="btn btn-success btn-md">Apply</button>
+                        <button class="btn btn-danger btn-md" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
 
         </div>
-
-    </div>
-</div>
+    </div>*@
 
 @*<script>
         $(document).ready(function () {

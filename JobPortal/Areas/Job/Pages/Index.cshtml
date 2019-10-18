@@ -5,6 +5,8 @@
     ViewData["Title"] = "Index";
 }
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <div class="form-group">
     <div class="col-12">
         <h2>All Jobs</h2>
@@ -14,7 +16,7 @@
 
 <div class="form-group">
     <div class="col-12">
-        <input class="form-control" id="search" placeholder="Search jobs by title">
+        <input class="form-control" id="searchBar" placeholder="Search jobs by title">
     </div>
 </div>
 <br />
@@ -33,8 +35,9 @@
                             </a>
                             <h6 class="card-subtitle mb-2 text-muted">City: @item.City</h6>
                             <p class="card-text">Description: @item.Description.Substring(0, 9)...</p>
-                            <p class="text-muted">Posted on: @item.PostDate</p>
+                            <p class=" card-text text-muted" >Posted on: @item.PostDate.ToShortDateString()</p>
                         </div>
+
                     </div>
                     <br />
                 }
@@ -52,6 +55,7 @@
     </div>
 </div>
 
+
 @section Scripts{
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -59,44 +63,45 @@
     <script>
         $(function () {
 
-            $("#search").autocomplete({
+            $("#searchBar").autocomplete({
+
                 source: function (request, response) {
                     $.ajax({
                         url: '/Job/Index?handler=Jobs',
                         data: { term: request.term },
+                        contentType: 'application/json',
                         type: 'GET',
                         headers: {
                             RequestVerificationToken:
                                 $('input:hidden[name="__RequestVerificationToken"]').val()
                         },
                         success: function (data) {
-                            //   alert(JSON.stringify(data));
+                            //  alert(JSON.stringify(data));
 
+                            $("#cardBody").empty();
                             $.each(data, function (i, element) {
 
-
-
-                                $('#cardBody').html(
-
-                                                    `<div class="card">
-                                                            <div class="card-body">
-                                                                <a href="`+ (element.id) + `">
-                                                                  <h5 class="card-title">`+ (element.title) + `</h5>
-                                                                </a>
-                                                                <h6 class="card-subtitle mb-2 text-muted">`+ (element.city) + `</h6>
-                                                                <p class="card-text">`+ (element.description) + `...</p>
-                                                                <p class="text-muted">Posted on:`+ (element.postDate) + `</p>
-                                                            </div>
-                                                        </div>
-                                                    <br/>`
-                                );
+                                $('#cardBody').append(
+                                                                `<div class="card">
+                                                                         <div class="card-body">
+                                                                           <a href="`+ (url= '/Job/Details?id='+element.jobId) + `">
+                                                                              <h5 class="card-title">`+ (element.title) + `</h5>
+                                                                            </a>
+                                                                            <h6 class="card-subtitle mb-2 text-muted">`+ (element.city) + `</h6>
+                                                                            <p class="card-text">`+ (element.description) + `...</p>
+                                                                            <p class="text-muted">Posted on: `+ new Date(element.postDate).toDateString() + `</p>
+                                                                        </div>
+                                                                    </div>
+                                                                <br/>`
+                                ).html();
                             })
                         },
                         error: function (err) {
                             console.log(err);
                         }
                     });
-                }
+                } 
+
             });
         });
     </script>

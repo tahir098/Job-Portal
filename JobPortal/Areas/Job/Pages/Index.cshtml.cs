@@ -37,11 +37,19 @@ namespace JobPortal.Areas.Job.Pages
 
         public JsonResult OnGetJobs()
         {
-            if (!string.IsNullOrEmpty(term.ToLower()))
+            try
             {
-                //Job = repository.GetJobs().Where(x => x.Title.StartsWith(term)).ToList();        
-                Job = _context.Job.Where(x => x.Title.StartsWith(term)).ToList();
-            }            
+                if (!string.IsNullOrEmpty(term.ToLower()))
+                {
+                    //Job = repository.GetJobs().Where(x => x.Title.StartsWith(term)).ToList();        
+                    Job = _context.Job.Where(x => x.Title.StartsWith(term)).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                Job = _context.Job.ToList();              
+               
+            }
            
             return new JsonResult(Job);
         }
