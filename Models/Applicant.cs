@@ -8,16 +8,16 @@ using System.Text;
 
 namespace Models
 {
-    [Table("Applicant")]
-    public class Applicant : IdentityUser
+  
+    public class Applicant 
     {
         
         public int ApplicantId { get; set; }
-        [Required]
-        public string Password { get; set; }
-        [Required]
-        public string ConfirmPassword { get; set; }
-        public IFormFile Cv { get; set; }
+       
+        public string Cv_Url { get; set; }
+
+        
+
 
     }
 }

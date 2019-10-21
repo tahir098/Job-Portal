@@ -3,8 +3,18 @@
 @{
     ViewData["Title"] = "Home page";
 }
+<link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+@section Scripts{
+
+    <script src="~/lib/toastr/toastr.min.js"></script>
+
+    <script>    
+              toastr.success("Welcome : @User.Identity.Name");   
+    </script>
+}

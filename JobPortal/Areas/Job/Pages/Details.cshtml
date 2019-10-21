@@ -5,9 +5,11 @@
     ViewData["Title"] = "Details";
 }
 
+<link href="~/lib/toastr/toastr.css" rel="stylesheet" />
+
 <h1>Details</h1>
 
-<div>
+<div id="detailsForm">
 
     <hr />
     <dl class="row">
@@ -43,92 +45,132 @@
     <a asp-page="/Index" class="btn btn-secondary float-right">Back to List</a>
 </div>
 
+<br />
+@if (Model.ShowMessage)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+         @Model.Message
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 
+<div class="modal" id="loginModal" tabindex="-1" data-keyboard="false" data-animation="fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="Cv" enctype="multipart/form-data">
+                @Html.HiddenFor(m => m.Job.JobId)
+                @Html.HiddenFor(m => m.Job.City)
+                @Html.HiddenFor(m => m.Job.Title)
+                @Html.HiddenFor(m => m.Job.Description)
 
+                <div class="modal-header">
+                    <div class="form-group">
+                        <h4>Upload your CV</h4>
+                    </div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input type="file" asp-for="Cv" class="form-control custom-file-input" />
+                            <label class="custom-file-label">Choose file...</label>
+                            <span asp-validation-for="Cv"></span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-success btn-md" type="submit" id="submitForm" value="Apply" />
+                    <button class="btn btn-danger btn-md" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
 
 @section Scripts{
     <script src="~/lib/bootbox/bootbox.js"></script>
-
+    <script src="~/lib/toastr/toastr.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <script>
-        $('#bootbox').on("click", function () {
 
-
-            var dialog = bootbox.dialog({
-                title: 'Apply here!',
-                message: "<p>This dialog has buttons. Each button has it's own callback function.</p>",
-                inputType: 'file',
-                size: 'medium',
-                buttons: {
-                    cancel: {
-                        label: "I'm a cancel button!",
-                        className: 'btn-danger',
-                        callback: function () {
-                            console.log('Custom cancel clicked');
-                        }
-                    },
-                   
-                    ok: {
-                        label: "I'm an OK button!",
-                        className: 'btn-info',
-                        callback: function () {
-                            console.log('Custom OK clicked');
-                        }
-                    }
-                }
-            });
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).next('.custom-file-label').html(fileName);
         });
+
+        //$("submitForm").on("click", function () {
+        //          toastr.success("Succes");
+        //});
+
+                //$('#bootbox').on("click", function () {
+
+
+                //    var dialog = bootbox.dialog({
+                //        title: 'Apply here!',
+                //        message:`
+                //            <form method="post" asp-page-handler="Cv" enctype="multipart/form-data">
+                //                <div class= "form-group" >
+                //                    <div class="col-md-10">
+                //                        <input type="file"  multiple class="form-control custom-form-input"/>
+                //                        <label class="custom-form-label">Choose file....</label>
+                //                      </div>
+                //                  </div >
+                //                     <div class="form-group">
+                //                            <div class="col-md-10">
+                //                         <input type="submit" value="Upload" />
+                //                        </div>
+                //                 </div>
+                //    </form >`,
+                //    inputType: 'file',
+                //        size: 'medium',
+                //            buttons: {
+                //        cancel: {
+                //            label: "I'm a cancel button!",
+                //                className: 'btn-danger',
+                //                    callback: function () {
+                //                        console.log('Custom cancel clicked');
+                //                    }
+                //        },
+
+                //        ok: {
+                //            label: "I'm an OK button!",
+                //                className: 'btn-info',
+                //                    callback: function () {
+                //                        console.log('Custom OK clicked');
+                //                    }
+                //        }
+                //    }
+                //});
+                //    });
     </script>
+
+    @*$('#submit').on("click", function (e) {
+        e.preventDefault();
+        $.ajax({
+
+        url: 'https://localhost:44334/Job/Details',
+        data: new FormData(document.forms[0]),
+        contentType: false,
+        processData: false,
+        type: 'post',
+        success: function () {
+        alert("CV posted");
+        }
+
+        });
+        });*@
+
 
 }
 
-@*<div asp-validation-for="ModelOnly"></div>
-    <div class="modal" id="loginModal" tabindex="-1" data-keyboard="false" data-animation="fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form method="post" enctype="multipart/form-data">
 
-                    <div class="modal-header">
-                        <input class="form-control" placeholder="Email" />
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <div class="custom-file">
-                                <input type="file" asp-for="@Model.Cv" class="form-control custom-file-input" />
-                                <label class="custom-file-label">Choose file...</label>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-success btn-md">Apply</button>
-                        <button class="btn btn-danger btn-md" data-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
-
-            </div>
-
-        </div>
-    </div>*@
 
 @*<script>
-        $(document).ready(function () {
 
-            $('#submit').on("click", function (e) {
-                e.preventDefault();
-                $.ajax({
-
-                    url: 'https://localhost:44334/Identity/Job/Details',
-                    data: new FormData(document.forms[0]),
-                    contentType: false,
-                    processData: false,
-                    type: 'post',
-                    success: function () {
-                        alert("CV posted");
-                    }
-
-                });
-            });
-        });
     </script>*@

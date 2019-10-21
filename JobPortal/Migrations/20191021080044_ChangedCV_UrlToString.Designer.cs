@@ -4,14 +4,16 @@ using JobPortal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191021080044_ChangedCV_UrlToString")]
+    partial class ChangedCV_UrlToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,13 +52,13 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "1d75bb67-db85-48d2-b73e-dca30262433f",
+                            ConcurrencyStamp = "6ad16c97-8e65-4594-b2e4-ad1e1bb41498",
                             Name = "Employer"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "a5754786-e378-4923-b058-772ce9d8de6b",
+                            ConcurrencyStamp = "64d0cbdf-8adb-4c72-a2ee-0a7e753b1f2d",
                             Name = "Applicant"
                         });
                 });
@@ -293,8 +295,16 @@ namespace JobPortal.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<string>("ConfirmPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("EmployerId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Employer");
                 });

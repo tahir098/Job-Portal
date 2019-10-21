@@ -22,6 +22,11 @@ namespace JobPortal.Areas.Job.Pages
             this.repository = repository;
         }
 
+        [TempData]
+        public string Message { get; set; }
+
+        public bool ShowMessage => !string.IsNullOrEmpty(Message);
+
         [BindProperty]
         public IList<Models.Job> Job { get; set; }
 

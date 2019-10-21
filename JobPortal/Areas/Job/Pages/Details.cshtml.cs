@@ -10,6 +10,7 @@ using Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using System.ComponentModel.DataAnnotations;
 
 namespace JobPortal.Areas.Job.Pages
 {
@@ -27,7 +28,7 @@ namespace JobPortal.Areas.Job.Pages
         [BindProperty]
         public Models.Job Job { get; set; }
 
- 
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -44,22 +45,42 @@ namespace JobPortal.Areas.Job.Pages
             return Page();
         }
 
+        [TempData]
+        public string Message { get; set; }
+        public bool ShowMessage => !string.IsNullOrEmpty(Message);
+
         [BindProperty]
+        [Required]
         public IFormFile Cv { get; set; }
-        public async Task<IActionResult> OnPostAsync()
+
+        public async Task<IActionResult> OnPostCvAsync()
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Error, can't submit.");
-                return Page();
-            }
 
-            var file = Path.Combine(env.ContentRootPath, "uploads", Cv.FileName);
-            using(var fileStream = new FileStream(file,FileMode.Create))
-            {
-                await Cv.CopyToAsync(fileStream);
+                Message = "CV is required!";
+                ModelState.AddModelError("", "CV is required");
             }
-            return RedirectToPage("./Index");
+            else
+            {
+                try
+                {
+                    var file = Path.Combine(env.ContentRootPath, "uploads", Cv.FileName);
+                    using (var fileStream = new FileStream(file, FileMode.Create))
+                    {
+                        await Cv.CopyToAsync(fileStream);
+                    }
+                    Message = "CV successfuly uploaded!";
+                    return RedirectToPage("./Index");
+                }
+                catch (Exception)
+                {
+                }
+            }
+            return Page();
+            //  return RedirectToPage($"Details?id="+ Job.JobId);
+            // return RedirectToPage($"Details?id={Job.JobId}");
+
         }
     }
 }

@@ -4,13 +4,29 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+<link href="~/lib/toastr/toastr.css" rel="stylesheet" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <div class="form-group">
     <div class="col-12">
         <h2>All Jobs</h2>
         <hr />
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-12">
+        @if (Model.ShowMessage)
+        {
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                @Model.Message
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        }
     </div>
 </div>
 
@@ -35,7 +51,7 @@
                             </a>
                             <h6 class="card-subtitle mb-2 text-muted">City: @item.City</h6>
                             <p class="card-text">Description: @item.Description.Substring(0, 9)...</p>
-                            <p class=" card-text text-muted" >Posted on: @item.PostDate.ToShortDateString()</p>
+                            <p class=" card-text text-muted">Posted on: @item.PostDate.ToShortDateString()</p>
                         </div>
 
                     </div>
@@ -57,11 +73,14 @@
 
 
 @section Scripts{
-
+    <script src="~/lib/toastr/toastr.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>
         $(function () {
+
+                  @*toastr.success("@Model.TempData");*@
+
 
             $("#searchBar").autocomplete({
 
@@ -100,7 +119,7 @@
                             console.log(err);
                         }
                     });
-                } 
+                }
 
             });
         });
