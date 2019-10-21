@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191021092456_ChangedCV_UrlToString1")]
-    partial class ChangedCV_UrlToString1
+    [Migration("20191021120949_seedingRoles")]
+    partial class seedingRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,13 +52,13 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "d9072738-902a-4e93-ac37-1201434c9be6",
+                            ConcurrencyStamp = "fa8aadfe-6b52-4301-a84a-99149dd6e010",
                             Name = "Employer"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "a9509c59-8726-4a0a-ad7d-c127bd0fad7c",
+                            ConcurrencyStamp = "b7b12702-3d0c-4516-bda0-d9061d53d069",
                             Name = "Applicant"
                         });
                 });
@@ -228,12 +228,12 @@ namespace JobPortal.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "0d01af92-276f-4a51-85a5-574ca7e7f081",
+                            UserId = "df6c29e1-4c3a-457a-a5d4-f9af03f7fb94",
                             RoleId = "1"
                         },
                         new
                         {
-                            UserId = "a11491f4-02fe-43f1-86ec-25cc7d0b90de",
+                            UserId = "c4b40680-1783-4eaa-9467-76b347e4b061",
                             RoleId = "2"
                         });
                 });
@@ -266,6 +266,9 @@ namespace JobPortal.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -273,9 +276,6 @@ namespace JobPortal.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmployerId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("PostDate")
                         .HasColumnType("datetime2");
@@ -286,27 +286,19 @@ namespace JobPortal.Migrations
 
                     b.HasKey("JobId");
 
-                    b.HasIndex("EmployerId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Job");
                 });
 
-            modelBuilder.Entity("Models.Employer", b =>
+            modelBuilder.Entity("Models.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("ConfirmPassword")
-                        .IsRequired()
+                    b.Property<string>("CV_Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmployerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("Employer");
+                    b.HasDiscriminator().HasValue("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -362,9 +354,9 @@ namespace JobPortal.Migrations
 
             modelBuilder.Entity("Models.Job", b =>
                 {
-                    b.HasOne("Models.Employer", "Employer")
+                    b.HasOne("Models.AppUser", "AppUser")
                         .WithMany()
-                        .HasForeignKey("EmployerId");
+                        .HasForeignKey("AppUserId");
                 });
 #pragma warning restore 612, 618
         }

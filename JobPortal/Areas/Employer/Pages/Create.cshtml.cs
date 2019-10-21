@@ -29,7 +29,8 @@ namespace JobPortal.Areas.Employer.Pages
         [BindProperty]
         public Models.Job Job { get; set; }
 
-        public Models.Employer Employer { get; set; }
+        [BindProperty]
+        public Models.AppUser AppUser { get; set; }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.

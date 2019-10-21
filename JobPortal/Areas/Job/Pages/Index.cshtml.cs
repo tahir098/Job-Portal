@@ -44,7 +44,7 @@ namespace JobPortal.Areas.Job.Pages
         {
             try
             {
-                if (!string.IsNullOrEmpty(term.ToLower()))
+                if (!string.IsNullOrWhiteSpace(term.ToLower()))
                 {
                     //Job = repository.GetJobs().Where(x => x.Title.StartsWith(term)).ToList();        
                     Job = _context.Job.Where(x => x.Title.StartsWith(term)).ToList();
@@ -52,8 +52,7 @@ namespace JobPortal.Areas.Job.Pages
             }
             catch (Exception)
             {
-                Job = _context.Job.ToList();              
-               
+                Job = _context.Job.ToList();   
             }
            
             return new JsonResult(Job);

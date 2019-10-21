@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191014100001_addingDateTimeNow")]
-    partial class addingDateTimeNow
+    [Migration("20191021120258_initialDb")]
+    partial class initialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,20 +47,6 @@ namespace JobPortal.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            ConcurrencyStamp = "38a48092-9a19-42b7-84d9-0119bea3e3c1",
-                            Name = "Employer"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            ConcurrencyStamp = "41148758-b02d-4a2b-be54-81b0fa547bc1",
-                            Name = "Applicant"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -224,18 +210,6 @@ namespace JobPortal.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "0d01af92-276f-4a51-85a5-574ca7e7f081",
-                            RoleId = "1"
-                        },
-                        new
-                        {
-                            UserId = "a11491f4-02fe-43f1-86ec-25cc7d0b90de",
-                            RoleId = "2"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -266,6 +240,9 @@ namespace JobPortal.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -273,10 +250,6 @@ namespace JobPortal.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmployerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("PostDate")
                         .HasColumnType("datetime2");
@@ -287,29 +260,19 @@ namespace JobPortal.Migrations
 
                     b.HasKey("JobId");
 
-                    b.HasIndex("EmployerId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Job");
                 });
 
-            modelBuilder.Entity("Models.Employer", b =>
+            modelBuilder.Entity("Models.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("ConfirmPassword")
-                        .IsRequired()
+                    b.Property<string>("CV_Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmployerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable("Employer");
-
-                    b.HasDiscriminator().HasValue("Employer");
+                    b.HasDiscriminator().HasValue("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -365,11 +328,9 @@ namespace JobPortal.Migrations
 
             modelBuilder.Entity("Models.Job", b =>
                 {
-                    b.HasOne("Models.Employer", "Employer")
+                    b.HasOne("Models.AppUser", "AppUser")
                         .WithMany()
-                        .HasForeignKey("EmployerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AppUserId");
                 });
 #pragma warning restore 612, 618
         }

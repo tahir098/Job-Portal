@@ -31,17 +31,18 @@ namespace JobPortal.Data
                 entity.HasData(new IdentityRole()
                 {
                     Id = "1",
-                     Name = "Employer"                      
-                },new IdentityRole() { Id="2",Name="Applicant" });
+                    Name = "Employer"
+                }, new IdentityRole() { Id = "2", Name = "Applicant" });
 
 
             });
             modelBuilder.Entity<IdentityUserRole<string>>(entity => 
             { 
                 entity.ToTable("UserRoles");
-                entity.HasData(new IdentityUserRole<string>() { RoleId = "1", UserId = "0d01af92-276f-4a51-85a5-574ca7e7f081" }, new IdentityUserRole<string>() 
+                entity.HasData(new IdentityUserRole<string>() { RoleId = "1", UserId = "df6c29e1-4c3a-457a-a5d4-f9af03f7fb94" }, new IdentityUserRole<string>()
                 {
-                      RoleId = "2", UserId = "a11491f4-02fe-43f1-86ec-25cc7d0b90de"
+                    RoleId = "2",
+                    UserId = "c4b40680-1783-4eaa-9467-76b347e4b061"
                 });
             });
             modelBuilder.Entity<IdentityUserClaim<string>>(entity =>

@@ -15,6 +15,6 @@ namespace Models
         [Required]
         public DateTime PostDate { get; set; } = DateTime.Now;
  
-        public Employer Employer { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }

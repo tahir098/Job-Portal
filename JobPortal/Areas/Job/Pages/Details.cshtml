@@ -9,6 +9,17 @@
 
 <h1>Details</h1>
 
+<br />
+@if (Model.ShowMessage)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @Model.Message
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
 <div id="detailsForm">
 
     <hr />
@@ -45,16 +56,7 @@
     <a asp-page="/Index" class="btn btn-secondary float-right">Back to List</a>
 </div>
 
-<br />
-@if (Model.ShowMessage)
-{
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-         @Model.Message
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-}
+
 
 <div class="modal" id="loginModal" tabindex="-1" data-keyboard="false" data-animation="fade">
     <div class="modal-dialog">
@@ -104,50 +106,50 @@
             $(this).next('.custom-file-label').html(fileName);
         });
 
-        //$("submitForm").on("click", function () {
-        //          toastr.success("Succes");
-        //});
+            //$("submitForm").on("click", function () {
+            //          toastr.success("Succes");
+            //});
 
-                //$('#bootbox').on("click", function () {
+                    //$('#bootbox').on("click", function () {
 
 
-                //    var dialog = bootbox.dialog({
-                //        title: 'Apply here!',
-                //        message:`
-                //            <form method="post" asp-page-handler="Cv" enctype="multipart/form-data">
-                //                <div class= "form-group" >
-                //                    <div class="col-md-10">
-                //                        <input type="file"  multiple class="form-control custom-form-input"/>
-                //                        <label class="custom-form-label">Choose file....</label>
-                //                      </div>
-                //                  </div >
-                //                     <div class="form-group">
-                //                            <div class="col-md-10">
-                //                         <input type="submit" value="Upload" />
-                //                        </div>
-                //                 </div>
-                //    </form >`,
-                //    inputType: 'file',
-                //        size: 'medium',
-                //            buttons: {
-                //        cancel: {
-                //            label: "I'm a cancel button!",
-                //                className: 'btn-danger',
-                //                    callback: function () {
-                //                        console.log('Custom cancel clicked');
-                //                    }
-                //        },
+                    //    var dialog = bootbox.dialog({
+                    //        title: 'Apply here!',
+                    //        message:`
+                    //            <form method="post" asp-page-handler="Cv" enctype="multipart/form-data">
+                    //                <div class= "form-group" >
+                    //                    <div class="col-md-10">
+                    //                        <input type="file"  multiple class="form-control custom-form-input"/>
+                    //                        <label class="custom-form-label">Choose file....</label>
+                    //                      </div>
+                    //                  </div >
+                    //                     <div class="form-group">
+                    //                            <div class="col-md-10">
+                    //                         <input type="submit" value="Upload" />
+                    //                        </div>
+                    //                 </div>
+                    //    </form >`,
+                    //    inputType: 'file',
+                    //        size: 'medium',
+                    //            buttons: {
+                    //        cancel: {
+                    //            label: "I'm a cancel button!",
+                    //                className: 'btn-danger',
+                    //                    callback: function () {
+                    //                        console.log('Custom cancel clicked');
+                    //                    }
+                    //        },
 
-                //        ok: {
-                //            label: "I'm an OK button!",
-                //                className: 'btn-info',
-                //                    callback: function () {
-                //                        console.log('Custom OK clicked');
-                //                    }
-                //        }
-                //    }
-                //});
-                //    });
+                    //        ok: {
+                    //            label: "I'm an OK button!",
+                    //                className: 'btn-info',
+                    //                    callback: function () {
+                    //                        console.log('Custom OK clicked');
+                    //                    }
+                    //        }
+                    //    }
+                    //});
+                    //    });
     </script>
 
     @*$('#submit').on("click", function (e) {

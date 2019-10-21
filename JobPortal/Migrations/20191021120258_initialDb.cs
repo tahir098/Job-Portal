@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JobPortal.Migrations
 {
-    public partial class renamingIds : Migration
+    public partial class initialDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +39,9 @@ namespace JobPortal.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    CV_Url = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,6 +67,29 @@ namespace JobPortal.Migrations
                         principalTable: "Roles",
                         principalColumn: "RoleId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Job",
+                columns: table => new
+                {
+                    JobId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    City = table.Column<string>(nullable: false),
+                    PostDate = table.Column<DateTime>(nullable: false),
+                    AppUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Job", x => x.JobId);
+                    table.ForeignKey(
+                        name: "FK_Job_Users_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,6 +178,11 @@ namespace JobPortal.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Job_AppUserId",
+                table: "Job",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_IdentityRoleClaim<string>_RoleId",
                 table: "RoleClaims",
                 column: "IdentityRoleClaim<string>_RoleId");
@@ -194,6 +224,9 @@ namespace JobPortal.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Job");
+
             migrationBuilder.DropTable(
                 name: "RoleClaims");
 

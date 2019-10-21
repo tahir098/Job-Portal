@@ -5,6 +5,15 @@
     <UserSecretsId>aspnet-JobPortal-E471C65F-1FB0-482D-B335-D05924434080</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20191021114846_initalDb.cs" />
+    <Compile Remove="Migrations\20191021114846_initalDb.Designer.cs" />
+    <Compile Remove="Migrations\20191021115204_initalDb.cs" />
+    <Compile Remove="Migrations\20191021115204_initalDb.Designer.cs" />
+    <Compile Remove="Migrations\20191021115841_initialDb.cs" />
+    <Compile Remove="Migrations\20191021115841_initialDb.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.0.0" />

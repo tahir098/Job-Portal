@@ -46,5 +46,12 @@ namespace JobPortal.RepositoryPattern
         {
             return _context.Job.FirstOrDefault(x => x.JobId == id);
         }
+
+
+        //public IList<Job> GetAppliedJobs(string cv)
+        //{
+        //    return _context.Job.OrderBy(x => x.AppUser.CV_Url ==cv).ToList();
+        //}
+
     }
 }
