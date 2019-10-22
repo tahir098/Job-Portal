@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191021120258_initialDb")]
-    partial class initialDb
+    [Migration("20191022092306_initalDb")]
+    partial class initalDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -265,6 +265,26 @@ namespace JobPortal.Migrations
                     b.ToTable("Job");
                 });
 
+            modelBuilder.Entity("Models.UserJob", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CV_Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("UserJob");
+                });
+
             modelBuilder.Entity("Models.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -331,6 +351,21 @@ namespace JobPortal.Migrations
                     b.HasOne("Models.AppUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("AppUserId");
+                });
+
+            modelBuilder.Entity("Models.UserJob", b =>
+                {
+                    b.HasOne("Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.Job", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

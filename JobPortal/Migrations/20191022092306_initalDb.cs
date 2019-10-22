@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JobPortal.Migrations
 {
-    public partial class initialDb : Migration
+    public partial class initalDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -177,6 +177,30 @@ namespace JobPortal.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserJob",
+                columns: table => new
+                {
+                    AppUserId = table.Column<string>(nullable: false),
+                    JobId = table.Column<int>(nullable: false),
+                    CV_Url = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.ForeignKey(
+                        name: "FK_UserJob_Users_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserJob_Job_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Job",
+                        principalColumn: "JobId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Job_AppUserId",
                 table: "Job",
@@ -198,6 +222,16 @@ namespace JobPortal.Migrations
                 name: "IX_UserClaims_IdentityUserClaim<string>_UserId",
                 table: "UserClaims",
                 column: "IdentityUserClaim<string>_UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserJob_AppUserId",
+                table: "UserJob",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserJob_JobId",
+                table: "UserJob",
+                column: "JobId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserLogins_UserId",
@@ -225,13 +259,13 @@ namespace JobPortal.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Job");
-
-            migrationBuilder.DropTable(
                 name: "RoleClaims");
 
             migrationBuilder.DropTable(
                 name: "UserClaims");
+
+            migrationBuilder.DropTable(
+                name: "UserJob");
 
             migrationBuilder.DropTable(
                 name: "UserLogins");
@@ -241,6 +275,9 @@ namespace JobPortal.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Job");
 
             migrationBuilder.DropTable(
                 name: "Roles");

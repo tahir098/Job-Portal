@@ -45,20 +45,6 @@ namespace JobPortal.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            ConcurrencyStamp = "fa8aadfe-6b52-4301-a84a-99149dd6e010",
-                            Name = "Employer"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            ConcurrencyStamp = "b7b12702-3d0c-4516-bda0-d9061d53d069",
-                            Name = "Applicant"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -222,18 +208,6 @@ namespace JobPortal.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "df6c29e1-4c3a-457a-a5d4-f9af03f7fb94",
-                            RoleId = "1"
-                        },
-                        new
-                        {
-                            UserId = "c4b40680-1783-4eaa-9467-76b347e4b061",
-                            RoleId = "2"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -287,6 +261,26 @@ namespace JobPortal.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Job");
+                });
+
+            modelBuilder.Entity("Models.UserJob", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CV_Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("UserJob");
                 });
 
             modelBuilder.Entity("Models.AppUser", b =>
@@ -355,6 +349,21 @@ namespace JobPortal.Migrations
                     b.HasOne("Models.AppUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("AppUserId");
+                });
+
+            modelBuilder.Entity("Models.UserJob", b =>
+                {
+                    b.HasOne("Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.Job", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

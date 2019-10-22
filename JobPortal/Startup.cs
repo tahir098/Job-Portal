@@ -43,12 +43,13 @@ namespace JobPortal
                 options.ClientId = googleAuthNSection["ClientId"];
                 options.ClientSecret = googleAuthNSection["ClientSecret"];
             });
-              
+
             services.AddTransient<IEFRepository, EFRepository>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
-     
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
             services.AddRazorPages();
         }
 
@@ -70,7 +71,7 @@ namespace JobPortal
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            
+
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -79,7 +80,7 @@ namespace JobPortal
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-        
+
             });
         }
     }
