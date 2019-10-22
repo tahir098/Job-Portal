@@ -29,7 +29,7 @@ namespace JobPortal.Areas.Employer.Pages
             //   var jobs = await _context.Job.FirstOrDefaultAsync(x => x.UserId == AppUser.Id);
             AppUser = _context.Users.SingleOrDefault(x => x.Email == User.Identity.Name);
 
-            Job = _context.UserJob.FirstOrDefault(x => x.UserId == AppUser.Id);
+          //  Job = _context.UserJob.FirstOrDefault(x => x.UserId == AppUser.Id);
 
             // var job = await _context.UserJob.FirstOrDefaultAsync(x => x.AppUser == AppUser);
 
