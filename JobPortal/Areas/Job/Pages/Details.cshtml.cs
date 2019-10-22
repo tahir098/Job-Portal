@@ -59,19 +59,6 @@ namespace JobPortal.Areas.Job.Pages
         [Required]
         public IFormFile Cv { get; set; }
 
-
-        //when uncomment then cv does not post.
-        //[BindProperty]
-        //public UserJob UserJob { get; set; }
-
-
-        // public UserJob UserJob { get; set; }
-
-
-        #region testing
-
-        //new class for testing
-
         [BindProperties]
         public class CvPostVm
         {
@@ -80,7 +67,6 @@ namespace JobPortal.Areas.Job.Pages
             public string CV_Url { get; set; }
 
         }
-        #endregion
         [Obsolete]
         public async Task<IActionResult> OnPostCvAsync()
         {
@@ -101,28 +87,14 @@ namespace JobPortal.Areas.Job.Pages
                     await Cv.CopyToAsync(fileStream);
                     var path = fileStream.Name.ToString();
 
-                    var vm = new CvPostVm
+                    var vm = new UserJob
                     {
+                        UserId = user.Id,
                         CV_Url = path,
-                        JobId = job,
-                        AppUserId = user.Id.ToString()
+                        JobId = job
                     };
 
-                    AppUser appUser = new AppUser();
-                    appUser.Id = vm.AppUserId;
-
-                    Models.Job job1 = new Models.Job();
-                    job1.JobId = vm.JobId;
-
-                    var userJobs = new UserJob()
-                    {
-                        AppUser = appUser,
-                        Job = job1,
-                        CV_Url = vm.CV_Url
-                    };
-
-                   
-                    _context.UserJob.Add(userJobs);
+                    _context.UserJob.Add(vm);
                     await _context.SaveChangesAsync();
 
                 }

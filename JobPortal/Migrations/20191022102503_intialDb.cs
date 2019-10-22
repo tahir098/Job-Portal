@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JobPortal.Migrations
 {
-    public partial class initalDb : Migration
+    public partial class intialDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,8 +40,7 @@ namespace JobPortal.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
-                    CV_Url = table.Column<string>(nullable: true)
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,14 +78,14 @@ namespace JobPortal.Migrations
                     Description = table.Column<string>(nullable: false),
                     City = table.Column<string>(nullable: false),
                     PostDate = table.Column<DateTime>(nullable: false),
-                    AppUserId = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Job", x => x.JobId);
                     table.ForeignKey(
-                        name: "FK_Job_Users_AppUserId",
-                        column: x => x.AppUserId,
+                        name: "FK_Job_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
@@ -181,30 +180,33 @@ namespace JobPortal.Migrations
                 name: "UserJob",
                 columns: table => new
                 {
-                    AppUserId = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(nullable: false),
                     JobId = table.Column<int>(nullable: false),
                     CV_Url = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.ForeignKey(
-                        name: "FK_UserJob_Users_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_UserJob", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserJob_Job_JobId",
                         column: x => x.JobId,
                         principalTable: "Job",
                         principalColumn: "JobId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserJob_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Job_AppUserId",
+                name: "IX_Job_UserId",
                 table: "Job",
-                column: "AppUserId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_IdentityRoleClaim<string>_RoleId",
@@ -224,14 +226,14 @@ namespace JobPortal.Migrations
                 column: "IdentityUserClaim<string>_UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserJob_AppUserId",
-                table: "UserJob",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserJob_JobId",
                 table: "UserJob",
                 column: "JobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserJob_UserId",
+                table: "UserJob",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserLogins_UserId",

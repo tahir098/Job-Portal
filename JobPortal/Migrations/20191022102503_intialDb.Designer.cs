@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191022092405_seedingData")]
-    partial class seedingData
+    [Migration("20191022102503_intialDb")]
+    partial class intialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -240,9 +240,6 @@ namespace JobPortal.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -258,18 +255,22 @@ namespace JobPortal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("JobId");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Job");
                 });
 
             modelBuilder.Entity("Models.UserJob", b =>
                 {
-                    b.Property<string>("AppUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CV_Url")
                         .IsRequired()
@@ -278,9 +279,15 @@ namespace JobPortal.Migrations
                     b.Property<int>("JobId")
                         .HasColumnType("int");
 
-                    b.HasIndex("AppUserId");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("JobId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserJob");
                 });
@@ -288,9 +295,6 @@ namespace JobPortal.Migrations
             modelBuilder.Entity("Models.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("CV_Url")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("AppUser");
                 });
@@ -350,20 +354,20 @@ namespace JobPortal.Migrations
                 {
                     b.HasOne("Models.AppUser", "AppUser")
                         .WithMany()
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Models.UserJob", b =>
                 {
-                    b.HasOne("Models.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Models.Job", "Job")
                         .WithMany()
                         .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

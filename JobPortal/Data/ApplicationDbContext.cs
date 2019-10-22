@@ -22,7 +22,7 @@ namespace JobPortal.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<UserJob>(e => e.HasNoKey());
+            modelBuilder.Entity<UserJob>(e => e.HasKey(x=>x.Id));
 
 
             // Override default AspNet Identity table names

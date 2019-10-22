@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-md-10">
         <form method="post" asp-area="Identity" asp-page-handler="Create">
-            @Html.HiddenFor(m=>m.AppUser)
+            @Html.HiddenFor(m=>m.AppUser.Id)
           
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @Html.ValidationSummary(false, "", new { @class = "text-danger small" })
@@ -26,8 +26,7 @@
                 <span asp-validation-for="Job.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Job.Description" class="control-label"></label>
-                @*<textarea asp-for="Job.Description" id="description" class="form-control"></textarea>*@
+                <label asp-for="Job.Description" class="control-label"></label>            
                 <input asp-for="Job.Description" class="form-control" />
                 <span asp-validation-for="Job.Description" class="text-danger"></span>
             </div>

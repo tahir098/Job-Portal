@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Models
 {
@@ -14,7 +16,9 @@ namespace Models
         public string City { get; set; }
         [Required]
         public DateTime PostDate { get; set; } = DateTime.Now;
- 
-        public AppUser AppUser { get; set; }
+
+        [ForeignKey("AppUser")]
+        public string UserId { get; set; }
+        public IdentityUser AppUser { get; set; }
     }
 }
