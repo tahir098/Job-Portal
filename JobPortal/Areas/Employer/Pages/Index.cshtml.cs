@@ -23,22 +23,10 @@ namespace JobPortal.Areas.Employer.Pages
         // [BindProperty]
         public IdentityUser AppUser { get; set; }
 
-
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            //   var jobs = await _context.Job.FirstOrDefaultAsync(x => x.UserId == AppUser.Id);
             AppUser = _context.Users.SingleOrDefault(x => x.Email == User.Identity.Name);
-
-          //  Job = _context.UserJob.FirstOrDefault(x => x.UserId == AppUser.Id);
-
-            // var job = await _context.UserJob.FirstOrDefaultAsync(x => x.AppUser == AppUser);
-
-            //   var result = await _context.Job.FindAsync(job.JobId);
-
-            //  result = Job.ToString();
-            //     Job = await _context.Job.ToListAsync();
-
-            Job = await _context.Job.ToListAsync();
+            Job = _context.Job.Where(x => x.UserId == AppUser.Id).ToList();
         }
     }
 }

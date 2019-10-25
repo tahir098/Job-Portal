@@ -48,10 +48,10 @@ namespace JobPortal.RepositoryPattern
         }
 
 
-        //public IList<Job> GetAppliedJobs(string cv)
-        //{
-        //    return _context.Job.OrderBy(x => x.AppUser.CV_Url ==cv).ToList();
-        //}
+        public IList<Job> GetAppliedJobs(string userId)
+        {
+            return _context.Job.OrderBy(x=>x.UserId == userId).ToList();
+        }
 
     }
 }

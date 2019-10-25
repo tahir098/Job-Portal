@@ -77,29 +77,37 @@ namespace JobPortal.Areas.Job.Pages
             }
             else
             {
-                //we get the jobId
                 var job = Job.JobId;
                 var user = await userManager.FindByNameAsync(User.Identity.Name);
-                //var user = User.Identity.Name;
-                var file = Path.Combine(env.ContentRootPath, "uploads", Cv.FileName);
-                using (var fileStream = new FileStream(file, FileMode.Create))
+                var userJob = _context.UserJob.Where(x => x.JobId == job).ToList();
+                var result = userJob.FirstOrDefault(x => x.UserId == user.Id);
+
+                if (result == null)
                 {
-                    await Cv.CopyToAsync(fileStream);
-                    var path = fileStream.Name.ToString();
-
-                    var vm = new UserJob
+                    var file = Path.Combine(env.ContentRootPath, "uploads", Cv.FileName);
+                    using (var fileStream = new FileStream(file, FileMode.Create))
                     {
-                        UserId = user.Id,
-                        CV_Url = path,
-                        JobId = job
-                    };
+                        await Cv.CopyToAsync(fileStream);
+                        var path = fileStream.Name.ToString();
 
-                    _context.UserJob.Add(vm);
-                    await _context.SaveChangesAsync();
+                        var vm = new UserJob
+                        {
+                            UserId = user.Id,
+                            CV_Url = path,
+                            JobId = job
+                        };
 
+                        _context.UserJob.Add(vm);
+                        await _context.SaveChangesAsync();
+                    }
+                    Message = "Applied Successfuly";
+                    return RedirectToPage("./Index");
                 }
-                Message = "Applied Successfuly";
-                return RedirectToPage("./Index");
+                else
+                {
+                    Message = "You already applied for this job!";
+                }
+
             }
             return Page();
         }
