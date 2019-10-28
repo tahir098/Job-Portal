@@ -38,33 +38,8 @@
             <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var item in Model.Job)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.JobId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PostDate)
-                </td>
-                <td>
-                    <a asp-area="Employer" asp-page="/Edit" asp-route-id="@item.JobId" class="text-warning"><i class="fa fa-pencil-alt"></i> Edit</a> |
-                    <a asp-area="Employer" asp-page="/Details" asp-route-id="@item.JobId"><i class="fa fa-eye"></i> Details</a> |
-                    <a asp-area="Employer" asp-page="/Delete" asp-route-id="@item.JobId" class="text-danger"><i class="fa fa-trash"></i> Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
+    
+    <partial name="_IndexData" />
 </table>
 
 @section Scripts{

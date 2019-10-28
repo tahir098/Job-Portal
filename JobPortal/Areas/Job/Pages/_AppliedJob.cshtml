@@ -1,0 +1,32 @@
+﻿@model JobPortal.Areas.Job.Pages.AppliedJobModel
+
+
+<br />
+
+@if (Model.UserJob.Any())
+{
+    @foreach (var item in Model.UserJob)
+    {
+        <div class="card">
+            <div class="card-body">
+                <a asp-route-id="@item.Job.JobId" asp-page="./Details">
+                    <h5 class="card-title"> @item.Job.Title</h5>
+                </a>
+                <h6 class="card-subtitle mb-2 text-muted">City: @item.Job.City</h6>
+                <p class="card-text">Description: @item.Job.Description.Substring(0, 9)...</p>
+
+            </div>
+
+        </div>
+        <br />
+    }
+}
+else
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        You haven't applied to any job yet.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}

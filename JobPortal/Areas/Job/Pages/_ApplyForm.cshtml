@@ -1,0 +1,72 @@
+﻿@model JobPortal.Areas.Job.Pages.DetailsModel
+
+<div id="detailsForm">
+
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Job.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Job.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Job.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Job.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Job.City)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Job.City)
+        </dd>
+        <dt class="col-sm-2">
+            Post date
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Job.PostDate)
+        </dd>
+    </dl>
+</div>
+<hr />
+
+<div>
+    <a class="btn btn-success" asp-page="./Apply" id="bootbox" data-target="#loginModal" data-toggle="modal">Apply Now</a>
+    <a asp-page="/Index" class="btn btn-secondary float-right">Back to List</a>
+</div>
+
+<div class="modal" id="loginModal" tabindex="-1" data-keyboard="false" data-animation="fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="Cv" enctype="multipart/form-data">
+                @Html.HiddenFor(m => m.Job.JobId)
+                @Html.HiddenFor(m => m.Job.City)
+                @Html.HiddenFor(m => m.Job.Title)
+                @Html.HiddenFor(m => m.Job.Description)
+                @Html.HiddenFor(m => m.Job.PostDate)
+                <div class="modal-header">
+                    <div class="form-group">
+                        <h4>Upload your CV</h4>
+                    </div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input type="file" asp-for="Cv" class="form-control custom-file-input" />
+                            <label class="custom-file-label">Choose file...</label>
+                            <span asp-validation-for="Cv"></span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-success btn-md" type="submit" id="submitForm" value="Apply" />
+                    <button class="btn btn-danger btn-md" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

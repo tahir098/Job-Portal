@@ -79,7 +79,7 @@ namespace JobPortal.Areas.Job.Pages
             {
                 var job = Job.JobId;
                 var user = await userManager.FindByNameAsync(User.Identity.Name);
-                var userJob = _context.UserJob.Where(x => x.JobId == job).ToList();
+                var userJob = _context.UserJob.Where(x => x.JobId == job).AsNoTracking().ToList();
                 var result = userJob.FirstOrDefault(x => x.UserId == user.Id);
 
                 if (result == null)

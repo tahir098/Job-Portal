@@ -1,0 +1,20 @@
+﻿@model JobPortal.Areas.Job.Pages.IndexModel
+
+@if (Model.Job.Any())
+{
+    @foreach (var item in Model.Job)
+    {
+        <div class="card">
+            <div class="card-body">
+                <a asp-route-id="@item.JobId" asp-page="./Details">
+                    <h5 class="card-title"> @item.Title</h5>
+                </a>
+                <h6 class="card-subtitle mb-2 text-muted">City: @item.City</h6>
+                <p class="card-text">Description: @item.Description.Substring(0, 9)...</p>
+                <div class="modal-footer"><p class=" card-text text-muted">Posted on: @item.PostDate.ToShortDateString()</p></div>
+            </div>
+
+        </div>
+        <br />
+    }
+}

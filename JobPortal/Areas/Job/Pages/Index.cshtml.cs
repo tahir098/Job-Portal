@@ -47,12 +47,16 @@ namespace JobPortal.Areas.Job.Pages
                 if (!string.IsNullOrWhiteSpace(term.ToLower()))
                 {
                     //Job = repository.GetJobs().Where(x => x.Title.StartsWith(term)).ToList();        
-                    Job = _context.Job.Where(x => x.Title.StartsWith(term)).ToList();
+                    Job = _context.Job.Where(x => x.Title.StartsWith(term))
+                        .AsNoTracking()
+                        .ToList();
                 }
             }
             catch (Exception)
             {
-                Job = _context.Job.ToList();   
+                Job = _context.Job
+                    .AsNoTracking()
+                    .ToList();   
             }
            
             return new JsonResult(Job);

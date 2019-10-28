@@ -26,7 +26,9 @@ namespace JobPortal.Areas.Employer.Pages
         public void OnGet()
         {
             AppUser = _context.Users.SingleOrDefault(x => x.Email == User.Identity.Name);
-            Job = _context.Job.Where(x => x.UserId == AppUser.Id).ToList();
+            Job = _context.Job.Where(x => x.UserId == AppUser.Id)
+                .AsNoTracking()
+                .ToList();
         }
     }
 }

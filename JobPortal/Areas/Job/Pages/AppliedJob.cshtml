@@ -5,45 +5,17 @@
 
 <div class="form-group">
     <div class="col-12">
+        <div class="float-right"><b>Total jobs applied :</b> @Model.UserJob.Count</div>
         <h2>Applied Jobs</h2>
         <hr />
     </div>
 </div>
 
-
-
 <div class="form-group">
     <div class="col-12">
         <div id="cardBody">
-
-            @if (Model.UserJob.Any())
-            {
-                @foreach (var item in Model.UserJob)
-                {
-                    <div class="card">
-                        <div class="card-body">
-                            <a asp-route-id="@item.Job.JobId" asp-page="./Details">
-                                <h5 class="card-title"> @item.Job.Title</h5>
-                            </a>
-                            <h6 class="card-subtitle mb-2 text-muted">City: @item.Job.City</h6>
-                            <p class="card-text">Description: @item.Job.Description.Substring(0, 9)...</p>
-                            
-                        </div>
-
-                    </div>
-                    <br />
-                }
-            }
-            else
-            {
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                   <p>You didn't apply to any job yet.</p>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            }
-
+            <partial name="_AppliedJob" />
         </div>
     </div>
 </div>
+

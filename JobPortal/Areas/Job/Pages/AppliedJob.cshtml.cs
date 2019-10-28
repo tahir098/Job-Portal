@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JobPortal.Areas.Job.Pages
 {
+
     public class AppliedJobModel : PageModel
     {
         private readonly ApplicationDbContext context;
@@ -27,16 +28,14 @@ namespace JobPortal.Areas.Job.Pages
           [BindProperty]
         public IList<UserJob> UserJob { get; set; }
 
-      //  [BindProperty]
-       // public IList<Models.Job> Job { get; set; }
-
         public IdentityUser AppUser { get; set; }
         public void OnGet()
         {
             AppUser = context.Users.SingleOrDefault(x => x.Email == User.Identity.Name);
 
             UserJob = context.UserJob.Where(x => x.UserId == AppUser.Id)
-                .Include(x => x.Job)               
+                .Include(x => x.Job)   
+                .AsNoTracking()
                 .ToList();
 
             //var query = from job in context.Job
